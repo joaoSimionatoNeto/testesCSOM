@@ -1,0 +1,1153 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CS.Utils.SP365</name>
+    </assembly>
+    <members>
+        <member name="M:CS.Utils.SP365.Extensions.Connection.Clone(Microsoft.SharePoint.Client.ClientRuntimeContext,System.Uri,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Clones a ClientContext object while "taking over" the security context of the existing ClientContext instance
+            </summary>
+            <param name="clientContext">ClientContext to be cloned</param>
+            <param name="siteUrl">Site URL to be used for cloned ClientContext</param>
+            <param name="accessTokens">Dictionary of access tokens for sites URLs</param>
+            <returns>A ClientContext object created for the passed site URL</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Extensions.Documents.LoadFileTXT(System.String,System.Char)">
+            <summary>
+            Carrega um arquivo TXT para um objeto do tipo ArrayList
+            </summary>
+            <param name="pathFile">Caminho completo do arquivo, inclusive com o nome e extensão do mesmo</param>
+            <param name="separator">O separador das colunas [';'] OU ['|'] do tipo Char</param>
+            <returns>Retorna um array do tipo ArrayList</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Extensions.Emails.ProcessEmailsListCSEmails(Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Este método percorre todos os e-mail da Lista padrão de e-mails. Esta lista deve ser criada pela solução 'CS.Mail.Sandboxed'. 
+            Caso a lista não tenha sido criada pela solução, o método pode não funcionar da forma correta, devido as configurações padrão da lista
+            </summary>
+            <param name="ctx">Contexto do site</param>
+        </member>
+        <member name="M:CS.Utils.SP365.Extensions.ListItemsExtensions.GetItemsPagination(Microsoft.SharePoint.Client.ClientContext,System.Int32,System.String,System.String,Microsoft.SharePoint.Client.ListItemCollectionPosition@)">
+            <summary>
+            Recupera os items de um lista de forma paginada
+            </summary>
+            <param name="ctx">Endereço do site</param>
+            <param name="paginate">Quantidade de items que devem vir a cada ver que for realizado a pesquisa paginada</param>
+            <param name="listInternalName">O internal name da lista</param>
+            <param name="View">Os campos da lista que devem ser trazidos. Deve ser passado na forma de View(CSOM)</param>
+            <param name="Position">Este parametro é referente ao objeto do tipo paginate que deve ser passado com out</param>
+            <returns>A coleção de items com a mesma quantidade conforme informado no parâmetro paginate</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Extensions.Utils.FindList(Microsoft.SharePoint.Client.ClientContext,System.String)">
+            <summary>
+            Obtém o display name da lista
+            </summary>
+            <param name="ctx">Web</param>
+            <param name="internalNameList">Nome interno da Lista</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Extensions.Utils.Gravalog(Microsoft.SharePoint.Client.ClientContext,System.String,System.String,System.String,CS.Utils.SP365.Extensions.Utils.TipoMensagemLog,CS.Utils.SP365.Extensions.Utils.LocalLogStorage,System.String)">
+            <summary>
+            Grava registro de log na lista de log do site
+            </summary>
+            <param name="ctx">Context do site</param>
+            <param name="listName">Nome da lista(internal Name)</param>
+            <param name="Message">Mensagem que deve ser gravada na lista de log</param>
+            <param name="nomeProcesso">Processo que ocorreu o log</param>
+            <param name="tipoMsg">Tipo da mensagem [Sucess | Erro | Informação]</param>
+            <param name="LogLocal">O local que deve ser gravado o log</param>
+            <param name="ExecutionId">A identificação do log. Para uso de filtros na View</param>
+        </member>
+        <member name="M:CS.Utils.SP365.Extensions.Utils.GetListByInternalName(Microsoft.SharePoint.Client.Web,System.String)">
+            <summary>
+            Obtém uma lista a partir do "nome interno" (nome da pasta raiz).
+            </summary>
+            <param name="web">A web à qual pertence a lista.</param>
+            <param name="internalName">Nome interno da lista.</param>
+            <returns>A lista com o nome interno fornecido.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Extensions.Utils.GetAllItems(Microsoft.SharePoint.Client.List,System.Collections.Generic.IEnumerable{System.String},System.Func{Microsoft.SharePoint.Client.CamlQuery,System.Collections.Generic.List{Microsoft.SharePoint.Client.CamlQuery}},CS.Utils.SP365.Log.ILogger,System.Boolean)">
+            <summary>
+            Obtém todos os itens de uma lista (mesmo que excedam o list view threshold), selecionando os campos especificados.
+            </summary>
+            <param name="list">A lista da qual devem ser obtidos os itens.</param>
+            <param name="selectFields">Nomes internos dos campos a serem selecionados.</param>
+            <param name="changeQueryBeforeExec">Se informado, passa o CamlQuery para tratamento antes da execução em si.</param>
+            <returns>Todos os itens da lista, apenas com os campos especificados disponíveis.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Extensions.Utils.GetAppOnlyContextFromAppConfig(System.String,System.String,System.String,System.String)">
+            <summary>
+            Obtém um ClientContext autenticado pelo modelo app-only, extraindo os dados "siteUrl", "realm", "clientId" e "clientSecret" do arquivo "app.config" da aplicação caso não sejam informados via parâmetros.
+            </summary>
+            <returns>Um ClientContext com estabelecido.</returns>
+        </member>
+        <member name="T:CS.Utils.SP365.Extensions.XDocumentsExcel">
+            <summary>
+            Métodos de extensão de objetos <see cref="!:XDocumentExcel"/>
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.Extensions.XDocumentsExcel.CreatingDataSetExcel(System.String,System.Boolean)">
+            <summary>
+            Transforma uma planilha Excel em um objeto DataSet
+            </summary>
+            <param name="filePath">O caminho onde o arquivo deve ser lido</param>
+            <param name="firstRowAsColumnNames">Define se a primeira linha do Excel deve ser usada para definir os nomes das colunas do DataSet</param>
+            <returns>Um DataSet onde cada tabela corresponde a uma "aba" da planilha</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Extensions.XDocumentsExcel.CreatingDataSetExcel(System.IO.Stream,System.Boolean)">
+            <summary>
+            Transforma uma planilha Excel em um objeto DataSet
+            </summary>
+            <param name="stream">O stream contendo os dados do arquivo Excel</param>
+            <param name="firstRowAsColumnNames">Define se a primeira linha do Excel deve ser usada para definir os nomes das colunas do DataSet</param>
+            <returns>Um DataSet onde cada tabela corresponde a uma "aba" da planilha</returns>
+        </member>
+        <member name="T:CS.Utils.SP365.Integration.D365Connector">
+            <summary>
+            Class responsábel por disponibilizar métodos úteis e controle de conexão/token com o Dynamics (AX) 365
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.Integration.D365Connector.token">
+            <summary>
+            Token de autorização obtido.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.Integration.D365Connector.IsConnected">
+            <summary>
+            Informa se temos uma conexão estabelecida com token obtido ou não.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.D365Connector.#ctor(System.String,CS.Utils.SP365.Log.ILogger)">
+            <summary>
+            Construtor simples.
+            </summary>
+            <remarks>Este construtor não dispara/inicia obtenção de conexão/token. Se utilizado, é necessário acionamento manual do método Connect().</remarks>
+            <param name="D365_Resource">Resource D365 qu será utilizado na obtenção de dados</param>
+            <param name="Log">Interface de geração de log previamente instanciada.</param>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.D365Connector.#ctor(System.String,CS.Utils.SP365.Log.ILogger,System.String,System.String)">
+            <summary>
+            Construtor especializado.
+            </summary>
+            <remarks>Este método inicia conexão/obtenção de token de forma assíncrona com o D365.</remarks>
+            <param name="D365_Resource">Resource D365 qu será utilizado na obtenção de dados</param>
+            <param name="Log">Interface de geração de log previamente instanciada.</param>
+            <param name="ClientId">ID do cliente</param>
+            <param name="ClientSecret">Segredo do cliente</param>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.D365Connector.RefreshToken">
+            <summary>
+            Realiza a atualização do token de acesso.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.D365Connector.Connect(System.String,System.String)">
+            <summary>
+            Inicia conexão/obtenção de token de forma assíncrona com o D365.
+            </summary>
+            <param name="ClientId">ID do cliente</param>
+            <param name="ClientSecret">Segredo do cliente</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.D365Connector.GetEntity``1(System.String,System.String,System.String,System.Boolean,System.Int32,System.Boolean)">
+            <summary>
+            Obtém dados de uma entidade específica no D365 de forma assíncrona.
+            </summary>
+            <typeparam name="T">Tipo de dado do item da coleção de retorno.</typeparam>
+            <param name="EntityName">Nome interno da entidade disponibilizada no D365.</param>
+            <param name="filters">Filtros que devem ser executados no formato REST. Ex: campo 1 eq 15</param>
+            <param name="select">Campos de retorno no formato REST.</param>
+            <param name="count">Padrão true. Define se a contagem total de registros deve ser retornada</param>
+            <param name="rowlimit">Quantidade máxima de itens no retorno</param>
+            <param name="paginate">Padrão false. Define se os registros devem ser obtidos de forma paginada.</param>
+            <returns>Coleção de itens do tipo T</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.D365Connector.PatchEntity(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Posta (PUT) o 'bodyObject' ao D365 na entidade 'EntityName'.
+            </summary>
+            <param name="EntityName">Nome interno da entidade disponibilizada no D365.</param>
+            <param name="bodyObject">Objeto que herde de 'EntityBase' para envio</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.D365Connector.PatchEntity``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Posta (PUT) o 'bodyObject' ao D365 na entidade 'EntityName' e recebe o tipo T específico.
+            </summary>
+            <typeparam name="T">Tipo específico de retorno</typeparam>
+            <param name="EntityName">Nome interno da entidade disponibilizada no D365.</param>
+            <param name="bodyObject">Objeto que herde de 'EntityBase' para envio</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.D365Connector.PutEntity(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Posta (PUT) o 'bodyObject' ao D365 na entidade 'EntityName'.
+            </summary>
+            <param name="EntityName">Nome interno da entidade disponibilizada no D365.</param>
+            <param name="bodyObject">Objeto que herde de 'EntityBase' para envio</param>
+            <param name="updateKeys">Chaves de identificação do item para atualização</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.D365Connector.PutEntity``1(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Posta (PUT) o 'bodyObject' ao D365 na entidade 'EntityName' e recebe o tipo T específico.
+            </summary>
+            <typeparam name="T">Tipo específico de retorno</typeparam>
+            <param name="EntityName">Nome interno da entidade disponibilizada no D365.</param>
+            <param name="bodyObject">Objeto que herde de 'EntityBase' para envio</param>
+            <param name="updateKeys">Chaves de identificação do item para atualização</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.D365Connector.DelEntity(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Remove um registro de uma entidade específica no Dynamics.
+            </summary>
+            <param name="EntityName">Nome interno da entidade disponibilizada no D365.</param>
+            <param name="Keys">Chaves de identificação do item para exclusão</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.D365Connector.PostEntity(System.String,System.Object,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Posta o 'bodyObject' ao D365 na entidade 'EntityName'
+            </summary>
+            <param name="EntityName">Nome interno da entidade disponibilizada no D365.</param>
+            <param name="bodyObject">Objeto que herde de 'EntityBase' para envio</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.D365Connector.PostEntity``1(System.String,System.Object,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Boolean)">
+            <summary>
+            Posta o 'bodyObject' ao D365 na entidade 'EntityName' e recebe o tipo T específico.
+            </summary>
+            <typeparam name="T">Tipo específico de retorno</typeparam>
+            <param name="EntityName">Nome interno da entidade disponibilizada no D365.</param>
+            <param name="bodyObject">Objeto que herde de 'EntityBase' para envio</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.D365Connector.TrapError(System.Exception,System.String)">
+            <summary>
+            Método interno de tratamento e exibição de erro no log.
+            </summary>
+            <param name="ex">Exception ocorrida</param>
+            <param name="msgInfo">Mensagem adicional para exibição junto ao erro.</param>
+        </member>
+        <member name="T:CS.Utils.SP365.Integration.SyncBehaviourAttribute">
+            <summary>
+            Nas classes de objetos que serão utilizados na integração, determina o comportamento que deve ser utilizado.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.Integration.SyncBehaviourAttribute.Behaviour">
+            <summary>
+            Retorna o comportamento que foi definido.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.Integration.SyncBehaviourAttribute.ForList">
+            <summary>
+            Se definido, retorna a lista específica que este comportamento deve ser aplicado.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.SyncBehaviourAttribute.#ctor(CS.Utils.SP365.Integration.PropertySyncBehaviours,System.String)">
+            <summary>
+            Determina o comportamento da propriedade de um objeto que estiver sendo integrado.
+            </summary>
+            <param name="behaviour">Comportamento da propriedade</param>
+            <param name="forList">Aplica o comportamento da propriedade apenas para a lista informada.</param>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.SyncBehaviourAttribute.Match(CS.Utils.SP365.Integration.PropertySyncBehaviours,System.String)">
+            <summary>
+            Verifica se o atributo atende os requisitos informados.
+            </summary>
+            <param name="behaviour">Comportamento a ser checado</param>
+            <param name="forList">Lista a ser checada</param>
+            <returns></returns>
+        </member>
+        <member name="T:CS.Utils.SP365.Integration.PropertySyncBehaviours">
+            <summary>
+            Enumerador dos comportamentos das propriedades do objeto em integração.
+            </summary>
+        </member>
+        <member name="F:CS.Utils.SP365.Integration.PropertySyncBehaviours.OnInsertAndUpdate">
+            <summary>
+            Padrão. A propriedade do objeto será utilizada tanto na inserção quanto atualização de registros.
+            </summary>
+        </member>
+        <member name="F:CS.Utils.SP365.Integration.PropertySyncBehaviours.OnlyOnInsert">
+            <summary>
+            A propriedade do objeto será utilizada somente na inserção de registros.
+            </summary>
+        </member>
+        <member name="F:CS.Utils.SP365.Integration.PropertySyncBehaviours.OnlyOnUpdate">
+            <summary>
+            A propriedade do objeto será utilizada somente na atualização de registros.
+            </summary>
+        </member>
+        <member name="F:CS.Utils.SP365.Integration.PropertySyncBehaviours.Ignore">
+            <summary>
+            A propriedade será ignorada e não participará da integração.
+            </summary>
+        </member>
+        <member name="F:CS.Utils.SP365.Integration.PropertySyncBehaviours.None">
+            <summary>
+            A propriedade não é ignorada porém também não é enviada ao SP nem em alterações e nem em inserções.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.#ctor(System.String,CS.Utils.SP365.Log.ILogger,CS.Utils.SP365.Integration.ServiceType,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String)">
+            <summary>
+            Cria um conector de web service.
+            </summary>
+            <param name="serverUrl">URL do servidor onde os web services a serem usados estão disponíveis.</param>
+            <param name="log">Objeto ILogger para registrar mensagens durante as operações com web services.</param>
+            <param name="serviceType">Tipo dos serviços disponíveis nesse servidor (REST ou SOAP). Obs.: Suporte a SOAP ainda não implementado.</param>
+            <param name="commonHeaders">Headers que serão enviados em todas as requisições a web services feitas por essa instância. Exemplo de uso: autorização.</param>
+            <param name="timeoutSeconds">Timeout das requisições, em segundos.</param>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.Get``1(System.String,System.String)">
+            <summary>
+            Obtém uma instância do tipo T a partir de um web service com retorno em formato JSON, em que o JSON retornado é um objeto com propriedades correspondentes às do tipo T.
+            Por exemplo: { "propA": 5, "propB": "teste" }, onde T possui as propriedades públicas "PropA" (ou "propA") e "PropB" (ou "propB").
+            Se o retorno do serviço for do tipo { "status": "...", "values": { "propA": ... } }, utilize a sobrecarga que recebe como parâmetro adicional o caminho da propriedade.
+            </summary>
+            <typeparam name="T">O tipo da entidade.</typeparam>
+            <param name="path">Caminho da URL do web service, relativo à URL do servidor fornecida no construtor.</param>
+            <param name="saveTrafficDataFileName">Se informado, grava os dados trafegados em arquivos no servidor.</param>
+            <returns>Um objeto do tipo T, ou default(T) em caso de erro (se T é uma classe, será null).</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.Get``1(System.String,System.String,CS.Utils.SP365.Integration.ContentType,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean,System.String)">
+            <summary>
+            Obtém uma instância do tipo T a partir de um web service.
+            </summary>
+            <typeparam name="T">O tipo da entidade.</typeparam>
+            <param name="path">Caminho da URL do web service, relativo à URL do servidor fornecida no construtor.</param>
+            <param name="elementOrPropertyPath">Se o tipo de retorno do web service for JSON, caminho da propriedade do JSON (JPath) que corresponde ao objeto (forneça null caso o JSON inteiro seja o objeto); se for XML, XPath do elemento que representa a instância da entidade (para serviços SOAP, considerar o XPath relativo ao elemento "soap:Body").</param>
+            <param name="responseType">Para serviços REST, tipo de conteúdo de retorno do web service (XML ou JSON). Esta opção é ignorada caso o tipo de serviço seja SOAP.</param>
+            <param name="headers">Se informado, envia essa coleção de headers somente nessa requisição</param>
+            <param name="returnResponseOnError">Se verdadeiro, retorna o corpo do response obtido do endpoint nos casos de HTTP Status diferente de sucesso.</param>
+            <param name="saveTrafficDataFileName">Se informado, grava os dados trafegados em arquivos no servidor.</param>
+            <returns>Um objeto do tipo T, ou default(T) em caso de erro (se T é uma classe, será null).</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.GetCollection``1(System.String)">
+            <summary>
+            Obtém uma coleção de objetos do tipo T a partir de um web service com retorno em formato JSON, em que o JSON retornado é apenas o array de objetos.
+            Por exemplo: [{ "propA": 5, "propB": "teste" }, { "propA": 7, "propB": "outro teste" }].
+            Se o retorno do serviço for do tipo { "status": "...", "values": [...] }, utilize a sobrecarga que recebe como parâmetro adicional o caminho da propriedade.
+            </summary>
+            <typeparam name="T">O tipo da entidade.</typeparam>
+            <param name="path">Caminho da URL do web service, relativo à URL do servidor fornecida no construtor.</param>
+            <returns>Uma coleção de objetos do tipo T, ou null em caso de erro.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.GetCollection``1(System.String,System.String,CS.Utils.SP365.Integration.ContentType,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean)">
+            <summary>
+            Obtém uma coleção de objetos do tipo T a partir de um web service.
+            </summary>
+            <typeparam name="T">O tipo da entidade.</typeparam>
+            <param name="path">Caminho da URL do web service, relativo à URL do servidor fornecida no construtor.</param>
+            <param name="elementOrPropertyPath">Se o tipo de retorno do web service for JSON, caminho da propriedade do JSON (JPath) que corresponde ao array de objetos (forneça null caso o JSON inteiro seja o array); se for XML, XPath dos elementos que representam uma instância da entidade (para serviços SOAP, considerar o XPath relativo ao elemento "soap:Body").</param>
+            <param name="responseType">Para serviços REST, tipo de conteúdo de retorno do web service (XML ou JSON). Esta opção é ignorada caso o tipo de serviço seja SOAP.</param>
+            <param name="headers">Se informado, envia essa coleção de headers somente nessa requisição</param>
+            <param name="returnResponseOnError">Se verdadeiro, retorna o corpo do response obtido do endpoint nos casos de HTTP Status diferente de sucesso.</param>
+            <returns>Uma coleção de objetos do tipo T, ou null em caso de erro.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.Put``2(System.String,``0,CS.Utils.SP365.Integration.ContentType,CS.Utils.SP365.Integration.ContentType,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean,System.String)">
+            <summary>
+            Envia um objeto do tipo T para um web service (método PUT) e recebe o retorno como um objeto do tipo R.
+            </summary>
+            <typeparam name="T">Tipo do objeto a ser enviado.</typeparam>
+            <typeparam name="R">Tipo do retorno do web service.</typeparam>
+            <param name="path">Caminho do web service, relativo à URL do servidor fornecida no construtor.</param>
+            <param name="entity">Objeto a ser enviado.</param>
+            <param name="requestType">Tipo de conteúdo do corpo da requisição.</param>
+            <param name="responseType">Tipo de conteúdo do retorno.</param>
+            <param name="headers">Se informado, envia essa coleção de headers somente nessa requisição</param>
+            <param name="returnResponseOnError">Se verdadeiro, retorna o corpo do response obtido do endpoint nos casos de HTTP Status diferente de sucesso.</param>
+            <returns>Um objeto do tipo R representando os dados retornados.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.Post``2(System.String,``0,CS.Utils.SP365.Integration.ContentType,CS.Utils.SP365.Integration.ContentType,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean,System.Boolean,System.String)">
+            <summary>
+            Envia um objeto do tipo T para um web service (método POST) e recebe o retorno como um objeto do tipo R.
+            </summary>
+            <typeparam name="T">Tipo do objeto a ser enviado.</typeparam>
+            <typeparam name="R">Tipo do retorno do web service.</typeparam>
+            <param name="path">Caminho do web service, relativo à URL do servidor fornecida no construtor.</param>
+            <param name="entity">Objeto a ser enviado.</param>
+            <param name="requestType">Tipo de conteúdo do corpo da requisição.</param>
+            <param name="responseType">Tipo de conteúdo do retorno.</param>
+            <param name="headers">Se informado, envia essa coleção de headers somente nessa requisição</param>
+            <param name="returnResponseOnError">Se verdadeiro, retorna o corpo do response obtido do endpoint nos casos de HTTP Status diferente de sucesso.</param>
+            <param name="isPUT">Indica que o verbo de envio deve ser PUT.</param>
+            <param name="saveTrafficDataFileName">Se informado, grava os dados trafegados em arquivos no servidor.</param>
+            <returns>Um objeto do tipo R representando os dados retornados.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.PostCollection``2(System.String,System.Collections.Generic.IEnumerable{``0},System.String,CS.Utils.SP365.Integration.ContentType,CS.Utils.SP365.Integration.ContentType,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean)">
+            <summary>
+            Envia uma coleção de itens representados pelo tipo T para um web service (método POST) e recebe o retorno como um objeto do tipo R.
+            </summary>
+            <typeparam name="T">Tipo de objetos a serem enviados.</typeparam>
+            <typeparam name="R">Tipo do retorno do web service.</typeparam>
+            <param name="path">Caminho do web service, relativo à URL do servidor fornecida no construtor.</param>
+            <param name="collection">Coleção de itens do tipo T a serem enviados.</param>
+            <param name="elementOrPropertyPath">Nome da propriedade do JSON ou elemento do XML que deve conter a coleção de itens. No caso de JSON, pode ser nulo, indicando que o JSON inteiro será um array com os itens.</param>
+            <param name="requestType">Tipo de conteúdo do corpo da requisição.</param>
+            <param name="responseType">Tipo de conteúdo do retorno.</param>
+            <param name="headers">Se informado, envia essa coleção de headers somente nessa requisição</param>
+            <param name="returnResponseOnError">Se verdadeiro, retorna o corpo do response obtido do endpoint nos casos de HTTP Status diferente de sucesso.</param>
+            <returns>Um objeto do tipo R representando os dados retornados.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.SyncSharePointList``1(System.String,System.String,Microsoft.SharePoint.Client.ClientContext,System.String,System.String[],System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},CS.Utils.SP365.Integration.WebServiceConnector.ProcessItem,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Sincroniza uma lista SharePoint com uma base de dados obtida a partir de um web service.
+            </summary>
+            <typeparam name="T">Tipo da entidade cuja coleção é retornada pelo web service.</typeparam>
+            <param name="path">Caminho do web service, relativo à URL do servidor fornecida no construtor.</param>
+            <param name="elementOrPropertyPath">Se o tipo de retorno do web service for JSON, caminho da propriedade do JSON (JPath) que corresponde ao array de objetos (forneça null caso o JSON inteiro seja o array); se for XML, XPath dos elementos que representam uma instância da entidade (para serviços SOAP, considerar o XPath relativo ao elemento "soap:Body").</param>
+            <param name="context">Objeto ClientContext conectado ao site que contém a lista a ser sincronizada.</param>
+            <param name="listName">Nome da lista SharePoint.</param>
+            <param name="keyFields">Vetor com os nomes dos campos (propriedades da entidade T) que compõem a chave primária dos itens.</param>
+            <param name="activeFieldName">Nome do campo na lista SharePoint que serve como uma flag "Ativo/Inativo", se fornecido os itens não existentes na base externa serão desativados em vez de serem excluídos.</param>
+            <param name="lookups">Mapeamento dos nomes das propriedades da entidade T que representam lookups na lista SharePoint para as respectivas listas referenciadas. Para campos do tipo pessoa, utilize o valor "_users" como nome da lista. Para especificar que o campo referenciado pelo lookup não é o padrão ("Title"), utilize o valor "(nome da lista):(nome do campo)".</param>
+            <param name="createLookupItems">Determina se valores não encontrados nas listas referenciadas por campos lookup devem implicar na criação de itens nestas listas. Para campos pessoa, só será possível criar os usuários caso o campo referenciado seja a conta de usuário (ou seja, o mapeamento deve ser para "_users:Name"). Se false, os campos cujos valores não forem encontrados na lista referenciada ficarão em branco.</param>
+            <param name="fieldMapping">Mapeamento de nomes de propriedades da entidade T para nomes internos de campos na lista SharePoint. Só é preciso fornecer o mapeamento quando os nomes são diferentes.</param>
+            <param name="processItem">Função de processamento dos itens de lista antes da inserção/atualização/deleção.</param>
+            <param name="keyFieldSeparator">Separador de valores dos campos que compõem a chave (os itens são indexados por uma string correspondente à concatenação dos valores de todos os campos chave, separados por este separador).</param>
+            <param name="activeFieldTrueValue">Valor correspondente a "verdadeiro" no campo "Ativo/Inativo" da lista SharePoint.</param>
+            <param name="activeFieldFalseValue">Valor correspondente a "falso" no campo "Ativo/Inativo" da lista SharePoint.</param>
+            <param name="operationsPerRequest">Número de operações que serão executadas a cada chamada ao servidor (ExecuteQuery do ClientContext).</param>
+            <returns>Uma lista com todas as mensagens de erro geradas durante a sincronização.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.SyncSharePointList``1(System.Collections.Generic.IEnumerable{``0},Microsoft.SharePoint.Client.ClientContext,System.String,System.String[],System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},CS.Utils.SP365.Integration.WebServiceConnector.ProcessItem,System.String,System.String,System.String,System.Int32,System.String[],System.Boolean,System.Boolean,System.String[],System.Func{System.String,System.Object,System.Object},System.Action{Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.Dictionary{System.String,Microsoft.SharePoint.Client.ListItem},System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.IList{Microsoft.SharePoint.Client.ListItem}}},System.String,System.Action{Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.Dictionary{System.String,Microsoft.SharePoint.Client.ListItem},System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.IList{Microsoft.SharePoint.Client.ListItem}}},System.Func{Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.Dictionary{System.String,``0},System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.IList{Microsoft.SharePoint.Client.ListItem}},System.Int32},System.Action{Microsoft.SharePoint.Client.ClientContext,System.String,Microsoft.SharePoint.Client.ListItem,``0,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.IList{Microsoft.SharePoint.Client.ListItem}},System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.Dictionary{System.String,CS.Utils.SP365.Integration.lookupItemRef}}},System.Func{Microsoft.SharePoint.Client.ClientContext,System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.IList{Microsoft.SharePoint.Client.ListItem}},System.String,``0,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.Dictionary{System.String,CS.Utils.SP365.Integration.lookupItemRef}},System.String},System.Collections.Generic.List{System.String},System.Boolean,System.Func{``0,Microsoft.SharePoint.Client.ListItem,System.Collections.Generic.Dictionary{System.String,Microsoft.SharePoint.Client.ListItem},System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.IList{Microsoft.SharePoint.Client.ListItem}},System.Collections.Generic.List{Microsoft.SharePoint.Client.ListItem},System.Boolean},System.Func{``0,System.Collections.Generic.Dictionary{System.String,Microsoft.SharePoint.Client.ListItem},System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.IList{Microsoft.SharePoint.Client.ListItem}},System.Collections.Generic.List{Microsoft.SharePoint.Client.ListItem},System.Boolean},System.Func{Microsoft.SharePoint.Client.CamlQuery,System.Collections.Generic.List{Microsoft.SharePoint.Client.CamlQuery}},System.Action{System.Collections.Generic.IList{Microsoft.SharePoint.Client.ListItem},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.IList{Microsoft.SharePoint.Client.ListItem}}},System.Action{System.Collections.Generic.Dictionary{System.String,Microsoft.SharePoint.Client.ListItem},System.Collections.Generic.List{Microsoft.SharePoint.Client.ListItem}},System.Action{Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.List{Microsoft.SharePoint.Client.ListItem},System.Collections.Generic.List{Microsoft.SharePoint.Client.ListItem},System.Collections.Generic.Dictionary{System.String,Microsoft.SharePoint.Client.ListItem},System.Collections.Generic.Dictionary{System.String,Microsoft.SharePoint.Client.ListItem}},System.String,System.Action{Microsoft.SharePoint.Client.ListItem,System.Collections.Generic.Dictionary{System.String,System.Object}},System.Func{System.Collections.Generic.IEnumerable{System.String},System.String,Microsoft.SharePoint.Client.List,System.Collections.Generic.List{Microsoft.SharePoint.Client.ListItem}},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Action{CS.MonitoringCenter.Models.Counters})">
+            <summary>
+            Sincroniza uma lista SharePoint com uma coleção de objetos do tipo T.
+            </summary>
+            <typeparam name="T">Tipo da entidade cuja coleção é retornada pelo web service.</typeparam>
+            <param name="sourceItems">Coleção de objetos do tipo T representando os itens da lista.</param>
+            <param name="context">Objeto ClientContext conectado ao site que contém a lista a ser sincronizada.</param>
+            <param name="listName">Nome da lista SharePoint.</param>
+            <param name="keyFields">Vetor com os nomes dos campos (propriedades da entidade T) que compõem a chave primária dos itens.</param>
+            <param name="activeFieldName">Nome do campo na lista SharePoint que serve como uma flag "Ativo/Inativo", se fornecido os itens não existentes na base externa serão desativados em vez de serem excluídos.</param>
+            <param name="lookups">Mapeamento dos nomes das propriedades da entidade T que representam lookups na lista SharePoint para as respectivas listas referenciadas. Para campos do tipo pessoa, utilize o valor "_users" como nome da lista. Para especificar que o campo referenciado pelo lookup não é o padrão ("Title"), utilize o valor "(nome da lista):(nome do campo):(campos de retorno adicionais separados por ',')".</param>
+            <param name="createLookupItems">Determina se valores não encontrados nas listas referenciadas por campos lookup devem implicar na criação de itens nestas listas. Para campos pessoa, só será possível criar os usuários caso o campo referenciado seja a conta de usuário (ou seja, o mapeamento deve ser para "_users:Name"). Se false, os campos cujos valores não forem encontrados na lista referenciada ficarão em branco.</param>
+            <param name="fieldMapping">Mapeamento de nomes de propriedades da entidade T para nomes internos de campos na lista SharePoint. Só é preciso fornecer o mapeamento quando os nomes são diferentes.</param>
+            <param name="processItem">Função de processamento dos itens de lista antes da inserção/atualização/deleção.</param>
+            <param name="keyFieldSeparator">Separador de valores dos campos que compõem a chave (os itens são indexados por uma string correspondente à concatenação dos valores de todos os campos chave, separados por este separador).</param>
+            <param name="activeFieldTrueValue">Valor correspondente a "verdadeiro" no campo "Ativo/Inativo" da lista SharePoint.</param>
+            <param name="activeFieldFalseValue">Valor correspondente a "falso" no campo "Ativo/Inativo" da lista SharePoint.</param>
+            <param name="operationsPerRequest">Número de operações que serão executadas a cada chamada ao servidor (ExecuteQuery do ClientContext).</param>
+            <param name="clearFieldsWhenInactive">Se informados, quando o <paramref name="activeFieldName"/> também informado limpa (define NULL) nestes campos.</param>
+            <param name="forceClearFieldsWhenInactive">Determina se o processo deve limpar estes campos mesmo se o item já estiver inativo</param>
+            <param name="removeDuplicatas">Determina se as duplicadas devem ser excluídas ao final do processo normal.</param>
+            <param name="createLookupItemsOnlyLists">Se ativado via parâmetro <paramref name="createLookupItems"/> e informado alguma lista aqui, cria somente para os lookups dessa lista informada, caso contrário, cria para todas.</param>
+            <param name="fnToCheckFldValue">Caso informada, função que verifica o valor que será obtido dos fields do tipo <typeparamref name="T"/></param>
+            <param name="RemainingItems">Caso inforado, desvia o tratamento dos itens que sobraram para tratamento particular acionando este delegate.</param>
+            <param name="checkModifiedDateField">Caso informado, ativa a checagem de item mais recente, SP ou coleção de dados. Define o nome da propriedade da coleção de dados recebida que tem a data de modificação do registro de origem e o campo data na lista do SP. ** Precisa ser um public field e não property e deve ser do tipo DateTime. Formato: NOMECAMPOORIGEM:SPInternalName</param>
+            <param name="sendSpItemsToUpdate">Juntamente com o <paramref name="CanUpdate" /> se informado envia os itens que são mais recentes no SP que devem ser enviados para atualização na origem</param>
+            <param name="sendSpItemsToCreate">Juntamente com o <paramref name="CanCreate" /> se informado envia os itens que não foram criados para a origem</param>
+            <param name="creatingLookupItem">Se informado, antes de criar um item na lista de lookup será acionado para tratamento do item.</param>
+            <param name="findLookupItem">Se informado, aciona essa função no momento da procura de um item de lookup, retorno (int) > 0 carrega o ID do item encontrado.</param>
+            <param name="choiceFieldsToSync">Se informado, coleta as apções de choice integradas e atualiza as definições destes campos choice com os faltantes.</param>
+            <param name="alwaysSyncChoiceFields">Se verdadeiro, faz o sync dos choices informados no <paramref name="choiceFieldsToSync"/> independente de existirem atualizações e/ou inclusões.</param>
+            <param name="CanUpdate">Função que, caso informada, recebe o item da origem e destino e determina se a origem atualiza o destino ou se é coletado para posterior envio a origem junto ao <paramref name="sendSpItemsToUpdate"/>. </param>
+            <param name="CanCreate">Função que, caso informada, recebe o item da origem e destino e determina se o item deve ser criado no destino ou se é coletado para posterior envio a origem junto ao <paramref name="sendSpItemsToUpdate"/>.</param>
+            <param name="changeQueryBeforeExec">Se informado, passa o CamlQuery para tratamento antes da execução em si.</param>
+            <param name="destItensObtidos">Call back acionado assim que os itens de destino tenham sido obtidos do SharePoint</param>
+            <param name="FinalAllItems">Se informado será acionado recebendo todos os itens (inclusive incluídos) trabalhados</param>
+            <param name="checkCollectionsBeforeStart">Se informado, envia os itens colecionados para checagem antes de iniciar. Envia, itens duplicados, itens sem chave, itens com chave e todos os itens com chave respectivamente para tratamento.</param>
+            <param name="dynamicItemType">Se informado, força a conversão de cada um dos itens da origem para este tipo.</param>
+            <param name="updatingItem">Se informado, passa o item para a camada chamadora antes de efetivar as alterações no item.</param>
+            <param name="GetAllItems">Se informado, não obtém automaticamente os itens da lista a ser syncada. Fica a cargo da camada chamadora.</param>
+            <param name="ignoreFieldsUpdate">Se informados (internalName do SP), ignora alterações nestes campos caso as alterações sejam apenas neles; não atualiza o item de destino</param>
+            <param name="extraSelectFields">Se informado, adiciona mais estes campos no select da lista principal além dos já definidos no sync</param>
+            <param name="csMonitorCallBack">Se informado, passa o objeto de contador da CS.Monitor pronto.</param>
+            <returns>Uma lista com todas as mensagens de erro geradas durante a sincronização.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.GetItemHistory(Microsoft.SharePoint.Client.ListItem,System.Action{System.String},System.Action{System.String,System.Exception})">
+            <summary>
+            Obtém todo o historico de versões de um item no SP via Server Object model.
+            </summary>
+            <param name="item">Objeto ListItem valorizado.</param>
+            <param name="log">Método de registro de logs.</param>
+            <param name="logError">Método de registro/tratamento de erros. Se não informado, no caso de erros, uma exceção será acionada, caso contrário, a Exceção será apenas informada.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.GetItemHistory(System.Int32,System.String,System.String,Microsoft.SharePoint.Client.ClientContext,System.Action{System.String},System.Action{System.String,System.Exception})">
+            <summary>
+            Obtém todo o historico de versões de um item no SP via Server Object model usando ID + SubSite + ListInternalName (path).
+            </summary>
+            <param name="itemID">ID do Item no SharePoint</param>
+            <param name="subSite">Subsite que contém a lista <paramref name="listInternalName"/>. Se a lista não estiver em Subsite, informe '/' para dizer que é subsite ou '/subsite/' para o subsite de fato.</param>
+            <param name="listInternalName">Nome interno (na url) da lista</param>
+            <param name="context">Contexto do SharePoint para as execuções</param>
+            <param name="log">Método de registro de logs.</param>
+            <param name="logError">Método de registro/tratamento de erros. Se não informado, no caso de erros, uma exceção será acionada, caso contrário, a Exceção será apenas informada.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.ClearListItems(Microsoft.SharePoint.Client.ClientContext,System.String,CS.Utils.SP365.Integration.WebServiceConnector.ProcessItem,System.Int32,System.String,System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Boolean,System.String,System.Boolean,System.String,System.String)">
+            <summary>
+            Elimina por lote todos os itens de uma lista.
+            </summary>
+            <param name="context">Objeto ClientContext conectado ao site que contém a lista a ser sincronizada.</param>
+            <param name="listName">Nome da lista SharePoint.</param>
+            <param name="processItem">Função de processamento dos itens de lista antes da inserção/atualização/deleção.</param>
+            <param name="rowLimit">Deifine o tamanho do lote de resgate e deleção de itens.</param>
+            <param name="Query">Se informado, obtem itens via essa query. Formato CAML.</param>
+            <param name="listWeb">Se informado, carrega via Path. Formato: "/SubWeb/"</param>
+            <param name="listPath">Juto ao <paramref name="listWeb">listWeb</paramref>, forma o caminho da lista. Formato "Lists/lista1" ou "Biblioteca"</param>
+            <param name="drillDownWebs">Valor padrão 'false'. Se informado, 'true', tenta localizar a lista na RootWeb e em todas as subWebs executando cada site em processo de exclusão paralelo.</param>
+            <param name="dataCorte">Data absoluta, se informada só apaga os itens com Created anteriores a essa data</param>
+            <param name="Dmenos">Se informado, gera uma dataCorte Hoje-D informado</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.ExportListItemsToCSV(Microsoft.SharePoint.Client.ClientContext,System.String,System.IO.StreamWriter,System.Int32,System.String,System.Collections.Generic.List{System.String},Microsoft.SharePoint.Client.Web)">
+            <summary>
+            Exporta os itens de uma lita para arquivo texto CSV.
+            </summary>
+            <param name="context">Objeto ClientContext conectado ao site que contém a lista a ser sincronizada.</param>
+            <param name="listName">Nome da lista SharePoint.</param>
+            <param name="file">Arquivo "aberto" para escrita das linhas.</param>
+            <param name="rowLimit">Define o tamanho do lote de resgate de itens.</param>
+            <param name="Query">Se informado, obtem itens via essa query. Formato CAML.</param>
+            <param name="ViewFields">Nomes internos dos campos que devem ser escritos no arquivo.</param>
+            <param name="Web">Se informado, utiliza essa Web para encontrar a lita, caso contrário, utiliza a RootWeb</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Integration.WebServiceConnector.GetData(System.String,System.Net.Http.HttpContent,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean,System.Boolean,System.String,System.String,System.Boolean)">
+            <summary>
+            Obtem dados de um endpoint enviando conteúdo ou não.
+            </summary>
+            <param name="url"></param>
+            <param name="content"></param>
+            <param name="headers"></param>
+            <param name="returnResponseOnError"></param>
+            <param name="isPUT"></param>
+            <param name="saveTrafficDataFileName">Se informado, salva todo o dado enviado e recebido em arquivos</param>
+            <param name="verb">Se informado, usa na request este verbo informado independente de POSTar conteúdo ou não.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Utils.SP365.Log.Documents.FileTxt(System.String,System.String,CS.Utils.SP365.Log.Enuns.MessageType)">
+            <summary>
+            Método responsável por criar log em um arquivo .TXT
+            </summary>
+            <param name="message">Mensagem informada pela aplicação</param>
+            <param name="messageType">Se a mensagem é uma Informação ou um erro</param>
+            <param name="appname">Nome da aplicação cliente, caso não seja passado nenhuma informação, será considerada o nome da aplicação que contém o recurso, neste caso, CS.Util.365.
+            O nome da aplicação cliente pode ser obtida utilizando o reflection: System.Reflection.Assembly.GetExecutingAssembly().GetName()
+            </param>
+        </member>
+        <member name="T:CS.Utils.SP365.Models.D365.ColumnMapsAtributte">
+            <summary>
+            Atributo utilizado para definir qual o campo do SharePoint equivalente a este do D365.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.Models.D365.ColumnMapsAtributte.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Define o campo do SharePoint equivalente a este.
+            </summary>
+            <param name="SharePointField">InternalName da coluna no SharePoint</param>
+            <param name="LookupListName">Caso a coluna no SharePoint seja um lookup, informe o nome interno da lista referência.</param>
+            <param name="LookupListField">Caso a coluna no SharePoint seja um lookup, informe o nome interno da coluna referência</param>
+        </member>
+        <member name="T:CS.Utils.SP365.Models.D365.EntityMapsAtributte">
+            <summary>
+            Atributo utilizado para definir qual a Lista do SharePoint é equivalente a este model/entidade no D365.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.Models.D365.EntityMapsAtributte.#ctor(System.String,System.String)">
+            <summary>
+            Define qual a Lista do SharePoint é equivalente a este model/entidade no D365
+            </summary>
+            <param name="SharePointList">Nome interno da lista no SharePoint</param>
+            <param name="D365Entity">Nome interno da entidade no Dynamics</param>
+        </member>
+        <member name="T:CS.Utils.SP365.SharePointContext">
+            <summary>
+            Encapsulates all the information from SharePoint.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContext.GetSPHostUrl(System.Web.HttpRequestBase)">
+            <summary>
+            Gets the SharePoint host url from QueryString of the specified HTTP request.
+            </summary>
+            <param name="httpRequest">The specified HTTP request.</param>
+            <returns>The SharePoint host url. Returns <c>null</c> if the HTTP request doesn't contain the SharePoint host url.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContext.GetSPHostUrl(System.Web.HttpRequest)">
+            <summary>
+            Gets the SharePoint host url from QueryString of the specified HTTP request.
+            </summary>
+            <param name="httpRequest">The specified HTTP request.</param>
+            <returns>The SharePoint host url. Returns <c>null</c> if the HTTP request doesn't contain the SharePoint host url.</returns>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContext.SPHostUrl">
+            <summary>
+            The SharePoint host url.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContext.SPAppWebUrl">
+            <summary>
+            The SharePoint app web url.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContext.SPLanguage">
+            <summary>
+            The SharePoint language.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContext.SPClientTag">
+            <summary>
+            The SharePoint client tag.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContext.SPProductNumber">
+            <summary>
+            The SharePoint product number.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContext.UserAccessTokenForSPHost">
+            <summary>
+            The user access token for the SharePoint host.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContext.UserAccessTokenForSPAppWeb">
+            <summary>
+            The user access token for the SharePoint app web.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContext.AppOnlyAccessTokenForSPHost">
+            <summary>
+            The app only access token for the SharePoint host.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContext.AppOnlyAccessTokenForSPAppWeb">
+            <summary>
+            The app only access token for the SharePoint app web.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContext.#ctor(System.Uri,System.Uri,System.String,System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="spHostUrl">The SharePoint host url.</param>
+            <param name="spAppWebUrl">The SharePoint app web url.</param>
+            <param name="spLanguage">The SharePoint language.</param>
+            <param name="spClientTag">The SharePoint client tag.</param>
+            <param name="spProductNumber">The SharePoint product number.</param>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContext.CreateUserClientContextForSPHost">
+            <summary>
+            Creates a user ClientContext for the SharePoint host.
+            </summary>
+            <returns>A ClientContext instance.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContext.CreateUserClientContextForSPAppWeb">
+            <summary>
+            Creates a user ClientContext for the SharePoint app web.
+            </summary>
+            <returns>A ClientContext instance.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContext.CreateAppOnlyClientContextForSPHost">
+            <summary>
+            Creates app only ClientContext for the SharePoint host.
+            </summary>
+            <returns>A ClientContext instance.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContext.CreateAppOnlyClientContextForSPAppWeb">
+            <summary>
+            Creates an app only ClientContext for the SharePoint app web.
+            </summary>
+            <returns>A ClientContext instance.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContext.GetDatabaseConnectionString">
+            <summary>
+            Gets the database connection string from SharePoint for autohosted add-in.
+            This method is deprecated because the autohosted option is no longer available.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContext.IsAccessTokenValid(System.Tuple{System.String,System.DateTime})">
+            <summary>
+            Determines if the specified access token is valid.
+            It considers an access token as not valid if it is null, or it has expired.
+            </summary>
+            <param name="accessToken">The access token to verify.</param>
+            <returns>True if the access token is valid.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContext.CreateClientContext(System.Uri,System.String)">
+            <summary>
+            Creates a ClientContext with the specified SharePoint site url and the access token.
+            </summary>
+            <param name="spSiteUrl">The site url.</param>
+            <param name="accessToken">The access token.</param>
+            <returns>A ClientContext instance.</returns>
+        </member>
+        <member name="T:CS.Utils.SP365.RedirectionStatus">
+            <summary>
+            Redirection status.
+            </summary>
+        </member>
+        <member name="T:CS.Utils.SP365.SharePointContextProvider">
+            <summary>
+            Provides SharePointContext instances.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContextProvider.Current">
+            <summary>
+            The current SharePointContextProvider instance.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContextProvider.#cctor">
+            <summary>
+            Initializes the default SharePointContextProvider instance.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContextProvider.Register(CS.Utils.SP365.SharePointContextProvider)">
+            <summary>
+            Registers the specified SharePointContextProvider instance as current.
+            It should be called by Application_Start() in Global.asax.
+            </summary>
+            <param name="provider">The SharePointContextProvider to be set as current.</param>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContextProvider.CheckRedirectionStatus(System.Web.HttpContextBase,System.Uri@)">
+            <summary>
+            Checks if it is necessary to redirect to SharePoint for user to authenticate.
+            </summary>
+            <param name="httpContext">The HTTP context.</param>
+            <param name="redirectUrl">The redirect url to SharePoint if the status is ShouldRedirect. <c>Null</c> if the status is Ok or CanNotRedirect.</param>
+            <returns>Redirection status.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContextProvider.CheckRedirectionStatus(System.Web.HttpContext,System.Uri@)">
+            <summary>
+            Checks if it is necessary to redirect to SharePoint for user to authenticate.
+            </summary>
+            <param name="httpContext">The HTTP context.</param>
+            <param name="redirectUrl">The redirect url to SharePoint if the status is ShouldRedirect. <c>Null</c> if the status is Ok or CanNotRedirect.</param>
+            <returns>Redirection status.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContextProvider.CreateSharePointContext(System.Web.HttpRequestBase)">
+            <summary>
+            Creates a SharePointContext instance with the specified HTTP request.
+            </summary>
+            <param name="httpRequest">The HTTP request.</param>
+            <returns>The SharePointContext instance. Returns <c>null</c> if errors occur.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContextProvider.CreateSharePointContext(System.Web.HttpRequest)">
+            <summary>
+            Creates a SharePointContext instance with the specified HTTP request.
+            </summary>
+            <param name="httpRequest">The HTTP request.</param>
+            <returns>The SharePointContext instance. Returns <c>null</c> if errors occur.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContextProvider.GetSharePointContext(System.Web.HttpContextBase)">
+            <summary>
+            Gets a SharePointContext instance associated with the specified HTTP context.
+            </summary>
+            <param name="httpContext">The HTTP context.</param>
+            <returns>The SharePointContext instance. Returns <c>null</c> if not found and a new instance can't be created.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContextProvider.GetSharePointContext(System.Web.HttpContext)">
+            <summary>
+            Gets a SharePointContext instance associated with the specified HTTP context.
+            </summary>
+            <param name="httpContext">The HTTP context.</param>
+            <returns>The SharePointContext instance. Returns <c>null</c> if not found and a new instance can't be created.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContextProvider.CreateSharePointContext(System.Uri,System.Uri,System.String,System.String,System.String,System.Web.HttpRequestBase)">
+            <summary>
+            Creates a SharePointContext instance.
+            </summary>
+            <param name="spHostUrl">The SharePoint host url.</param>
+            <param name="spAppWebUrl">The SharePoint app web url.</param>
+            <param name="spLanguage">The SharePoint language.</param>
+            <param name="spClientTag">The SharePoint client tag.</param>
+            <param name="spProductNumber">The SharePoint product number.</param>
+            <param name="httpRequest">The HTTP request.</param>
+            <returns>The SharePointContext instance. Returns <c>null</c> if errors occur.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContextProvider.ValidateSharePointContext(CS.Utils.SP365.SharePointContext,System.Web.HttpContextBase)">
+            <summary>
+            Validates if the given SharePointContext can be used with the specified HTTP context.
+            </summary>
+            <param name="spContext">The SharePointContext.</param>
+            <param name="httpContext">The HTTP context.</param>
+            <returns>True if the given SharePointContext can be used with the specified HTTP context.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContextProvider.LoadSharePointContext(System.Web.HttpContextBase)">
+            <summary>
+            Loads the SharePointContext instance associated with the specified HTTP context.
+            </summary>
+            <param name="httpContext">The HTTP context.</param>
+            <returns>The SharePointContext instance. Returns <c>null</c> if not found.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointContextProvider.SaveSharePointContext(CS.Utils.SP365.SharePointContext,System.Web.HttpContextBase)">
+            <summary>
+            Saves the specified SharePointContext instance associated with the specified HTTP context.
+            <c>null</c> is accepted for clearing the SharePointContext instance associated with the HTTP context.
+            </summary>
+            <param name="spContext">The SharePointContext instance to be saved, or <c>null</c>.</param>
+            <param name="httpContext">The HTTP context.</param>
+        </member>
+        <member name="T:CS.Utils.SP365.SharePointAcsContext">
+            <summary>
+            Encapsulates all the information from SharePoint in ACS mode.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointAcsContext.ContextToken">
+            <summary>
+            The context token.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointAcsContext.CacheKey">
+            <summary>
+            The context token's "CacheKey" claim.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointAcsContext.RefreshToken">
+            <summary>
+            The context token's "refreshtoken" claim.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointAcsContext.GetAccessTokenString(System.Tuple{System.String,System.DateTime}@,System.Func{Microsoft.IdentityModel.S2S.Protocols.OAuth2.OAuth2AccessTokenResponse})">
+            <summary>
+            Ensures the access token is valid and returns it.
+            </summary>
+            <param name="accessToken">The access token to verify.</param>
+            <param name="tokenRenewalHandler">The token renewal handler.</param>
+            <returns>The access token string.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointAcsContext.RenewAccessTokenIfNeeded(System.Tuple{System.String,System.DateTime}@,System.Func{Microsoft.IdentityModel.S2S.Protocols.OAuth2.OAuth2AccessTokenResponse})">
+            <summary>
+            Renews the access token if it is not valid.
+            </summary>
+            <param name="accessToken">The access token to renew.</param>
+            <param name="tokenRenewalHandler">The token renewal handler.</param>
+        </member>
+        <member name="T:CS.Utils.SP365.SharePointAcsContextProvider">
+            <summary>
+            Default provider for SharePointAcsContext.
+            </summary>
+        </member>
+        <member name="T:CS.Utils.SP365.SharePointHighTrustContext">
+            <summary>
+            Encapsulates all the information from SharePoint in HighTrust mode.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointHighTrustContext.LogonUserIdentity">
+            <summary>
+            The Windows identity for the current user.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointHighTrustContext.GetAccessTokenString(System.Tuple{System.String,System.DateTime}@,System.Func{System.String})">
+            <summary>
+            Ensures the access token is valid and returns it.
+            </summary>
+            <param name="accessToken">The access token to verify.</param>
+            <param name="tokenRenewalHandler">The token renewal handler.</param>
+            <returns>The access token string.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.SharePointHighTrustContext.RenewAccessTokenIfNeeded(System.Tuple{System.String,System.DateTime}@,System.Func{System.String})">
+            <summary>
+            Renews the access token if it is not valid.
+            </summary>
+            <param name="accessToken">The access token to renew.</param>
+            <param name="tokenRenewalHandler">The token renewal handler.</param>
+        </member>
+        <member name="T:CS.Utils.SP365.SharePointHighTrustContextProvider">
+            <summary>
+            Default provider for SharePointHighTrustContext.
+            </summary>
+        </member>
+        <member name="F:CS.Utils.SP365.TokenHelper.SharePointPrincipal">
+            <summary>
+            SharePoint principal.
+            </summary>
+        </member>
+        <member name="F:CS.Utils.SP365.TokenHelper.HighTrustAccessTokenLifetime">
+            <summary>
+            Lifetime of HighTrust access token, 12 hours.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetContext(System.String,System.String,System.String)">
+            <summary>
+            Método de autenticação passando usuário e senha
+            </summary>
+            <param name="Url">Endereço do site</param>
+            <param name="user">Usuário com permissão de acesso ao site, na maioria dos casos deveria ser passado um usuário de serviço</param>
+            <param name="senha">Senha do usuário</param>
+            <returns>Um ClientContext. No caso da autenticação falhar de alguma o forma será retornado um context nulo e será retornado uma exception</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetContextTokenFromRequest(System.Web.HttpRequest)">
+            <summary>
+            Retrieves the context token string from the specified request by looking for well-known parameter names in the
+            POSTed form parameters and the querystring. Returns null if no context token is found.
+            </summary>
+            <param name="request">HttpRequest in which to look for a context token</param>
+            <returns>The context token string</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetContextTokenFromRequest(System.Web.HttpRequestBase)">
+            <summary>
+            Retrieves the context token string from the specified request by looking for well-known parameter names in the
+            POSTed form parameters and the querystring. Returns null if no context token is found.
+            </summary>
+            <param name="request">HttpRequest in which to look for a context token</param>
+            <returns>The context token string</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.ReadAndValidateContextToken(System.String,System.String)">
+            <summary>
+            Validate that a specified context token string is intended for this application based on the parameters
+            specified in web.config. Parameters used from web.config used for validation include ClientId,
+            HostedAppHostNameOverride, HostedAppHostName, ClientSecret, and Realm (if it is specified). If HostedAppHostNameOverride is present,
+            it will be used for validation. Otherwise, if the <paramref name="appHostName"/> is not
+            null, it is used for validation instead of the web.config's HostedAppHostName. If the token is invalid, an
+            exception is thrown. If the token is valid, TokenHelper's static STS metadata url is updated based on the token contents
+            and a JsonWebSecurityToken based on the context token is returned.
+            </summary>
+            <param name="contextTokenString">The context token to validate</param>
+            <param name="appHostName">The URL authority, consisting of  Domain Name System (DNS) host name or IP address and the port number, to use for token audience validation.
+            If null, HostedAppHostName web.config setting is used instead. HostedAppHostNameOverride web.config setting, if present, will be used
+            for validation instead of <paramref name="appHostName"/> .</param>
+            <returns>A JsonWebSecurityToken based on the context token.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetAccessToken(CS.Utils.SP365.SharePointContextToken,System.String)">
+            <summary>
+            Retrieves an access token from ACS to call the source of the specified context token at the specified
+            targetHost. The targetHost must be registered for the principal that sent the context token.
+            </summary>
+            <param name="contextToken">Context token issued by the intended access token audience</param>
+            <param name="targetHost">Url authority of the target principal</param>
+            <returns>An access token with an audience matching the context token's source</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetAccessToken(System.String,System.String,System.String,System.String,System.Uri)">
+            <summary>
+            Uses the specified authorization code to retrieve an access token from ACS to call the specified principal
+            at the specified targetHost. The targetHost must be registered for target principal.  If specified realm is
+            null, the "Realm" setting in web.config will be used instead.
+            </summary>
+            <param name="authorizationCode">Authorization code to exchange for access token</param>
+            <param name="targetPrincipalName">Name of the target principal to retrieve an access token for</param>
+            <param name="targetHost">Url authority of the target principal</param>
+            <param name="targetRealm">Realm to use for the access token's nameid and audience</param>
+            <param name="redirectUri">Redirect URI registered for this add-in</param>
+            <returns>An access token with an audience of the target principal</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetAccessToken(System.String,System.String,System.String,System.String)">
+            <summary>
+            Uses the specified refresh token to retrieve an access token from ACS to call the specified principal
+            at the specified targetHost. The targetHost must be registered for target principal.  If specified realm is
+            null, the "Realm" setting in web.config will be used instead.
+            </summary>
+            <param name="refreshToken">Refresh token to exchange for access token</param>
+            <param name="targetPrincipalName">Name of the target principal to retrieve an access token for</param>
+            <param name="targetHost">Url authority of the target principal</param>
+            <param name="targetRealm">Realm to use for the access token's nameid and audience</param>
+            <returns>An access token with an audience of the target principal</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetAppOnlyAccessToken(System.String,System.String,System.String)">
+            <summary>
+            Retrieves an app-only access token from ACS to call the specified principal
+            at the specified targetHost. The targetHost must be registered for target principal.  If specified realm is
+            null, the "Realm" setting in web.config will be used instead.
+            </summary>
+            <param name="targetPrincipalName">Name of the target principal to retrieve an access token for</param>
+            <param name="targetHost">Url authority of the target principal</param>
+            <param name="targetRealm">Realm to use for the access token's nameid and audience</param>
+            <returns>An access token with an audience of the target principal</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.CreateRemoteEventReceiverClientContext(Microsoft.SharePoint.Client.EventReceivers.SPRemoteEventProperties)">
+            <summary>
+            Creates a client context based on the properties of a remote event receiver
+            </summary>
+            <param name="properties">Properties of a remote event receiver</param>
+            <returns>A ClientContext ready to call the web where the event originated</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.CreateAppEventClientContext(Microsoft.SharePoint.Client.EventReceivers.SPRemoteEventProperties,System.Boolean)">
+            <summary>
+            Creates a client context based on the properties of an add-in event
+            </summary>
+            <param name="properties">Properties of an add-in event</param>
+            <param name="useAppWeb">True to target the app web, false to target the host web</param>
+            <returns>A ClientContext ready to call the app web or the parent web</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetClientContextWithAuthorizationCode(System.String,System.String,System.Uri)">
+            <summary>
+            Retrieves an access token from ACS using the specified authorization code, and uses that access token to
+            create a client context
+            </summary>
+            <param name="targetUrl">Url of the target SharePoint site</param>
+            <param name="authorizationCode">Authorization code to use when retrieving the access token from ACS</param>
+            <param name="redirectUri">Redirect URI registered for this add-in</param>
+            <returns>A ClientContext ready to call targetUrl with a valid access token</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetClientContextWithAuthorizationCode(System.String,System.String,System.String,System.String,System.Uri)">
+            <summary>
+            Retrieves an access token from ACS using the specified authorization code, and uses that access token to
+            create a client context
+            </summary>
+            <param name="targetUrl">Url of the target SharePoint site</param>
+            <param name="targetPrincipalName">Name of the target SharePoint principal</param>
+            <param name="authorizationCode">Authorization code to use when retrieving the access token from ACS</param>
+            <param name="targetRealm">Realm to use for the access token's nameid and audience</param>
+            <param name="redirectUri">Redirect URI registered for this add-in</param>
+            <returns>A ClientContext ready to call targetUrl with a valid access token</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetClientContextWithAccessToken(System.String,System.String)">
+            <summary>
+            Uses the specified access token to create a client context
+            </summary>
+            <param name="targetUrl">Url of the target SharePoint site</param>
+            <param name="accessToken">Access token to be used when calling the specified targetUrl</param>
+            <returns>A ClientContext ready to call targetUrl with the specified access token</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetClientContextWithContextToken(System.String,System.String,System.String)">
+            <summary>
+            Retrieves an access token from ACS using the specified context token, and uses that access token to create
+            a client context
+            </summary>
+            <param name="targetUrl">Url of the target SharePoint site</param>
+            <param name="contextTokenString">Context token received from the target SharePoint site</param>
+            <param name="appHostUrl">Url authority of the hosted add-in.  If this is null, the value in the HostedAppHostName
+            of web.config will be used instead</param>
+            <returns>A ClientContext ready to call targetUrl with a valid access token</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetAuthorizationUrl(System.String,System.String)">
+            <summary>
+            Returns the SharePoint url to which the add-in should redirect the browser to request consent and get back
+            an authorization code.
+            </summary>
+            <param name="contextUrl">Absolute Url of the SharePoint site</param>
+            <param name="scope">Space-delimited permissions to request from the SharePoint site in "shorthand" format
+            (e.g. "Web.Read Site.Write")</param>
+            <returns>Url of the SharePoint site's OAuth authorization page</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetAuthorizationUrl(System.String,System.String,System.String)">
+            <summary>
+            Returns the SharePoint url to which the add-in should redirect the browser to request consent and get back
+            an authorization code.
+            </summary>
+            <param name="contextUrl">Absolute Url of the SharePoint site</param>
+            <param name="scope">Space-delimited permissions to request from the SharePoint site in "shorthand" format
+            (e.g. "Web.Read Site.Write")</param>
+            <param name="redirectUri">Uri to which SharePoint should redirect the browser to after consent is
+            granted</param>
+            <returns>Url of the SharePoint site's OAuth authorization page</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetAppContextTokenRequestUrl(System.String,System.String)">
+            <summary>
+            Returns the SharePoint url to which the add-in should redirect the browser to request a new context token.
+            </summary>
+            <param name="contextUrl">Absolute Url of the SharePoint site</param>
+            <param name="redirectUri">Uri to which SharePoint should redirect the browser to with a context token</param>
+            <returns>Url of the SharePoint site's context token redirect page</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetS2SAccessTokenWithWindowsIdentity(System.Uri,System.Security.Principal.WindowsIdentity)">
+            <summary>
+            Retrieves an S2S access token signed by the application's private certificate on behalf of the specified
+            WindowsIdentity and intended for the SharePoint at the targetApplicationUri. If no Realm is specified in
+            web.config, an auth challenge will be issued to the targetApplicationUri to discover it.
+            </summary>
+            <param name="targetApplicationUri">Url of the target SharePoint site</param>
+            <param name="identity">Windows identity of the user on whose behalf to create the access token</param>
+            <returns>An access token with an audience of the target principal</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetS2SClientContextWithWindowsIdentity(System.Uri,System.Security.Principal.WindowsIdentity)">
+            <summary>
+            Retrieves an S2S client context with an access token signed by the application's private certificate on
+            behalf of the specified WindowsIdentity and intended for application at the targetApplicationUri using the
+            targetRealm. If no Realm is specified in web.config, an auth challenge will be issued to the
+            targetApplicationUri to discover it.
+            </summary>
+            <param name="targetApplicationUri">Url of the target SharePoint site</param>
+            <param name="identity">Windows identity of the user on whose behalf to create the access token</param>
+            <returns>A ClientContext using an access token with an audience of the target application</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.GetRealmFromTargetUrl(System.Uri)">
+            <summary>
+            Get authentication realm from SharePoint
+            </summary>
+            <param name="targetApplicationUri">Url of the target SharePoint site</param>
+            <returns>String representation of the realm GUID</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.IsHighTrustApp">
+            <summary>
+            Determines if this is a high trust add-in.
+            </summary>
+            <returns>True if this is a high trust add-in.</returns>
+        </member>
+        <member name="M:CS.Utils.SP365.TokenHelper.EnsureTrailingSlash(System.String)">
+            <summary>
+            Ensures that the specified URL ends with '/' if it is not null or empty.
+            </summary>
+            <param name="url">The url.</param>
+            <returns>The url ending with '/' if it is not null or empty.</returns>
+        </member>
+        <member name="T:CS.Utils.SP365.SharePointContextToken">
+            <summary>
+            A JsonWebSecurityToken generated by SharePoint to authenticate to a 3rd party application and allow callbacks using a refresh token
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContextToken.TargetPrincipalName">
+            <summary>
+            The principal name portion of the context token's "appctxsender" claim
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContextToken.RefreshToken">
+            <summary>
+            The context token's "refreshtoken" claim
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContextToken.CacheKey">
+            <summary>
+            The context token's "CacheKey" claim
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContextToken.SecurityTokenServiceUri">
+            <summary>
+            The context token's "SecurityTokenServiceUri" claim
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.SharePointContextToken.Realm">
+            <summary>
+            The realm portion of the context token's "audience" claim
+            </summary>
+        </member>
+        <member name="T:CS.Utils.SP365.MultipleSymmetricKeySecurityToken">
+            <summary>
+            Represents a security token which contains multiple security keys that are generated using symmetric algorithms.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.MultipleSymmetricKeySecurityToken.#ctor(System.Collections.Generic.IEnumerable{System.Byte[]})">
+            <summary>
+            Initializes a new instance of the MultipleSymmetricKeySecurityToken class.
+            </summary>
+            <param name="keys">An enumeration of Byte arrays that contain the symmetric keys.</param>
+        </member>
+        <member name="M:CS.Utils.SP365.MultipleSymmetricKeySecurityToken.#ctor(System.String,System.Collections.Generic.IEnumerable{System.Byte[]})">
+            <summary>
+            Initializes a new instance of the MultipleSymmetricKeySecurityToken class.
+            </summary>
+            <param name="tokenId">The unique identifier of the security token.</param>
+            <param name="keys">An enumeration of Byte arrays that contain the symmetric keys.</param>
+        </member>
+        <member name="P:CS.Utils.SP365.MultipleSymmetricKeySecurityToken.Id">
+            <summary>
+            Gets the unique identifier of the security token.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.MultipleSymmetricKeySecurityToken.SecurityKeys">
+            <summary>
+            Gets the cryptographic keys associated with the security token.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.MultipleSymmetricKeySecurityToken.ValidFrom">
+            <summary>
+            Gets the first instant in time at which this security token is valid.
+            </summary>
+        </member>
+        <member name="P:CS.Utils.SP365.MultipleSymmetricKeySecurityToken.ValidTo">
+            <summary>
+            Gets the last instant in time at which this security token is valid.
+            </summary>
+        </member>
+        <member name="M:CS.Utils.SP365.MultipleSymmetricKeySecurityToken.MatchesKeyIdentifierClause(System.IdentityModel.Tokens.SecurityKeyIdentifierClause)">
+            <summary>
+            Returns a value that indicates whether the key identifier for this instance can be resolved to the specified key identifier.
+            </summary>
+            <param name="keyIdentifierClause">A SecurityKeyIdentifierClause to compare to this instance</param>
+            <returns>true if keyIdentifierClause is a SecurityKeyIdentifierClause and it has the same unique identifier as the Id property; otherwise, false.</returns>
+        </member>
+    </members>
+</doc>
